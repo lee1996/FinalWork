@@ -102,17 +102,28 @@ print('保证金为:　%d' % assurance)
 print('认证时间为:　%s' % startTime)
 i=0
 for data in comment:
-    if ('整体感觉' in data) or ('质量不错') in data:
+    if ('整体感觉' in data) or ('质量不错' in data) or (len(data)>100):
         i+=1
 print('可能存在恶意刷评论的评论数为:　%d' % i)
 print('所有评论如下:\n')
 from pandas import DataFrame
 import numpy as np
-length=len(result)
-data=DataFrame(comment,columns=['评论'])
-path='data/data.csv'
-# print(data)
 
+data=DataFrame(comment,columns=['评论'])
+length=data.count()
+# path='data/data.csv'
+# print(data)
+import matplotlib as mpl
+import matplotlib.pyplot as plt
+
+
+labels=['deliberate','other']
+sizes=[i,length-i]
+explode=(0.1,0)
+plt.title('The Rate of TaoBao Comments of Deliberate ')
+plt.pie(sizes,explode=explode,labels=labels,autopct='%1.1f%%',shadow=False,startangle=90)
+plt.axis('equal')
+plt.show()
 
 
 
